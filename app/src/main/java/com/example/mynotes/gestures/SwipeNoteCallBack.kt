@@ -60,31 +60,36 @@ abstract class SwipeNoteCallBack(private val context: Context, private val recyc
                 return
             }
             dX < 0 -> {
-                background.color = backgroundColorComplete
+
+                //Background color set to red on left swipe
+                background.color = backgroundColorDelete
+                //background image set to delete on swipe
                 background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
                 background.draw(c)
 
-                val editIconTop = itemView.top + (itemHeight - intrinsicHeightEditIcon) / 2
-                val editIconMargin = (itemHeight - intrinsicHeightEditIcon) / 2
-                val editIconLeft = itemView.right - editIconMargin - intrinsicWidthEditIcon
-                val editIconRight = itemView.right - editIconMargin
-                val editIconBottom = editIconTop + intrinsicHeightEditIcon
+                val deleteIconTop = itemView.top + (itemHeight - intrinsicHeightEditIcon) / 2
+                val deleteIconMargin = (itemHeight - intrinsicHeightEditIcon) / 2
+                val deleteIconLeft = itemView.right - deleteIconMargin - intrinsicWidthEditIcon
+                val deleteIconRight = itemView.right - deleteIconMargin
+                val deleteIconBottom = deleteIconTop + intrinsicHeightEditIcon
 
-                editIcon!!.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom)
-                editIcon.draw(c)
+                deleteIcon!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+                deleteIcon.draw(c)
             }
             else -> {
-                background.color = backgroundColorDelete
+                //background color is set to green on right swipe
+                background.color = backgroundColorComplete
+                //background image is set to edit on swipe
                 background.setBounds(itemView.left + dX.toInt(), itemView.top, itemView.left, itemView.bottom)
                 background.draw(c)
 
-                val deleteIconTop = itemView.top + (itemHeight - intrinsicHeightDeleteIcon) / 2
-                val deleteIconMargin = (itemHeight - intrinsicHeightDeleteIcon) / 2
-                val deleteIconRight = deleteIconMargin + intrinsicWidthDeleteIcon
-                val deleteIconBottom = deleteIconTop + intrinsicHeightDeleteIcon
+                val editIconTop = itemView.top + (itemHeight - intrinsicHeightDeleteIcon) / 2
+                val editIconMargin = (itemHeight - intrinsicHeightDeleteIcon) / 2
+                val editIconRight = editIconMargin + intrinsicWidthDeleteIcon
+                val editIconBottom = editIconTop + intrinsicHeightDeleteIcon
 
-                deleteIcon!!.setBounds(deleteIconMargin, deleteIconTop, deleteIconRight, deleteIconBottom)
-                deleteIcon.draw(c)
+                editIcon!!.setBounds(editIconMargin, editIconTop, editIconRight, editIconBottom)
+                editIcon.draw(c)
             }
         }
     }

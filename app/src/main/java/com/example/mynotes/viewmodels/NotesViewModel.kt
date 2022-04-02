@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.mynotes.datamodels.NoteInfo
 import com.example.mynotes.persistence.database.MyNotesDatabase
 import com.example.mynotes.persistence.repositories.NoteRepository
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

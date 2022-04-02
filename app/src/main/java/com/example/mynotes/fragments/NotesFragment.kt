@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.example.mynotes.datamodels.NoteInfo
 import com.example.mynotes.gestures.SwipeNoteCallBack
 import com.example.mynotes.viewmodels.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_notes.*
 
 class NotesFragment : Fragment() {
@@ -59,13 +61,18 @@ class NotesFragment : Fragment() {
 
         val swipeNoteCallBack = object : SwipeNoteCallBack(mContext, notesListRecyclerView) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                if (direction == ItemTouchHelper.LEFT) {
+                //Changed action from LEFT to RIGHT touch and the background process is edit
+                if (direction == ItemTouchHelper.RIGHT) {
                     val note = adapter.getNoteAtPosition(viewHolder.adapterPosition)
                     val action = NotesFragmentDirections.actionNotesFragmentToEditNoteFragment(note.id)
                     findNavController().navigate(action)
-                } else if (direction == ItemTouchHelper.RIGHT) {
+                }
+                //changed action from right to left touch and the background process is delete
+                else if (direction == ItemTouchHelper.LEFT) {
                     val note = adapter.getNoteAtPosition(viewHolder.adapterPosition)
                     notesViewModel.deleteNote(note)
+                    val snack = Snackbar.make(view,note.title+" deleted successfully.", Snackbar.LENGTH_LONG)
+                    snack.show()
                 }
             }
         }
