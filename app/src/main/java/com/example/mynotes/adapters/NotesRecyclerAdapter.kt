@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotes.R
 import com.example.mynotes.datamodels.NoteInfo
 
-class NotesRecyclerAdapter(private val clickListener: (NoteInfo) -> Unit) : RecyclerView.Adapter<NotesRecyclerAdapter.ViewHolder>() {
+class NotesRecyclerAdapter(private val clickListener: (NoteInfo) -> Unit) :
+    RecyclerView.Adapter<NotesRecyclerAdapter.ViewHolder>() {
 
     private var notes = emptyList<NoteInfo>()
 
@@ -40,7 +41,7 @@ class NotesRecyclerAdapter(private val clickListener: (NoteInfo) -> Unit) : Recy
         }
     }
 
-    fun setNotes(notes : List<NoteInfo>) {
+    fun setNotes(notes: List<NoteInfo>) {
         this.notes = notes
         notifyDataSetChanged()
     }

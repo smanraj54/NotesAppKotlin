@@ -18,7 +18,7 @@ import org.w3c.dom.Text
 
 class CreateNoteFragment : Fragment() {
 
-    private val notesViewModel : NotesViewModel by activityViewModels()
+    private val notesViewModel: NotesViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +41,19 @@ class CreateNoteFragment : Fragment() {
             findNavController().navigate(R.id.action_createNoteFragment_to_notesFragment)
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                saveNote(noteTitleInputField, noteBodyInputField)
-                findNavController().navigate(R.id.action_createNoteFragment_to_notesFragment)
-            }
-        })
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    saveNote(noteTitleInputField, noteBodyInputField)
+                    findNavController().navigate(R.id.action_createNoteFragment_to_notesFragment)
+                }
+            })
     }
 
-    private fun saveNote(noteTitleInputField : TextView, noteBodyInputField : TextView) {
-        val noteTitle : String = noteTitleInputField.text.toString()
-        val noteBody : String = noteBodyInputField.text.toString()
+    private fun saveNote(noteTitleInputField: TextView, noteBodyInputField: TextView) {
+        val noteTitle: String = noteTitleInputField.text.toString()
+        val noteBody: String = noteBodyInputField.text.toString()
 
         if (noteTitle.isNotEmpty() && noteBody.isNotEmpty()) {
             val note = NoteInfo(title = noteTitle, body = noteBody)

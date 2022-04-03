@@ -25,9 +25,9 @@ import kotlinx.android.synthetic.main.fragment_notes.*
 
 class NotesFragment : Fragment() {
 
-    private val notesViewModel : NotesViewModel by activityViewModels()
-    private lateinit var itemTouchHelper : ItemTouchHelper
-    private lateinit var mContext : Context
+    private val notesViewModel: NotesViewModel by activityViewModels()
+    private lateinit var itemTouchHelper: ItemTouchHelper
+    private lateinit var mContext: Context
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,7 +53,9 @@ class NotesFragment : Fragment() {
         val adapter = NotesRecyclerAdapter { note: NoteInfo -> handleNoteClick(note) }
         notesListRecyclerView.adapter = adapter
 
-        notesViewModel.notes.observe(viewLifecycleOwner, Observer { notes -> notes?.let { adapter.setNotes(it) } })
+        notesViewModel.notes.observe(
+            viewLifecycleOwner,
+            Observer { notes -> notes?.let { adapter.setNotes(it) } })
 
         view.findViewById<FloatingActionButton>(R.id.floating_action_button).setOnClickListener {
             findNavController().navigate(R.id.action_notesFragment_to_createNoteFragment)
@@ -64,14 +66,19 @@ class NotesFragment : Fragment() {
                 //Changed action from LEFT to RIGHT touch and the background process is edit
                 if (direction == ItemTouchHelper.RIGHT) {
                     val note = adapter.getNoteAtPosition(viewHolder.adapterPosition)
-                    val action = NotesFragmentDirections.actionNotesFragmentToEditNoteFragment(note.id)
+                    val action =
+                        NotesFragmentDirections.actionNotesFragmentToEditNoteFragment(note.id)
                     findNavController().navigate(action)
                 }
                 //changed action from right to left touch and the background process is delete
                 else if (direction == ItemTouchHelper.LEFT) {
                     val note = adapter.getNoteAtPosition(viewHolder.adapterPosition)
                     notesViewModel.deleteNote(note)
-                    val snack = Snackbar.make(view,note.title+" deleted successfully.", Snackbar.LENGTH_LONG)
+                    val snack = Snackbar.make(
+                        view,
+                        note.title + " deleted successfully.",
+                        Snackbar.LENGTH_LONG
+                    )
                     snack.show()
                 }
             }

@@ -19,8 +19,8 @@ import kotlinx.android.synthetic.main.fragment_create_note.*
 
 class EditNoteFragment : Fragment() {
 
-    private val notesViewModel : NotesViewModel by activityViewModels()
-    private val noteIDArgument : EditNoteFragmentArgs by navArgs()
+    private val notesViewModel: NotesViewModel by activityViewModels()
+    private val noteIDArgument: EditNoteFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +43,17 @@ class EditNoteFragment : Fragment() {
             findNavController().navigate(R.id.action_editNoteFragment_to_notesFragment)
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                updateNote(noteTitleInputField, noteBodyInputField)
-                findNavController().navigate(R.id.action_editNoteFragment_to_notesFragment)
-            }
-        })
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    updateNote(noteTitleInputField, noteBodyInputField)
+                    findNavController().navigate(R.id.action_editNoteFragment_to_notesFragment)
+                }
+            })
 
-        notesViewModel.getNote(noteIDArgument.noteID).observe(viewLifecycleOwner, Observer { note -> note?.let { setNoteFieldValues(it) } })
+        notesViewModel.getNote(noteIDArgument.noteID)
+            .observe(viewLifecycleOwner, Observer { note -> note?.let { setNoteFieldValues(it) } })
     }
 
     private fun setNoteFieldValues(note: NoteInfo) {
@@ -58,9 +61,9 @@ class EditNoteFragment : Fragment() {
         noteBodyInputField.setText(note.body)
     }
 
-    private fun updateNote(noteTitleInputField : TextView, noteBodyInputField : TextView) {
-        val noteTitle : String = noteTitleInputField.text.toString()
-        val noteBody : String = noteBodyInputField.text.toString()
+    private fun updateNote(noteTitleInputField: TextView, noteBodyInputField: TextView) {
+        val noteTitle: String = noteTitleInputField.text.toString()
+        val noteBody: String = noteBodyInputField.text.toString()
 
         val note = NoteInfo(id = noteIDArgument.noteID, title = noteTitle, body = noteBody)
         notesViewModel.updateNote(note)

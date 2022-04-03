@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.notes_list_item.*
 
 class NoteFragment : Fragment() {
 
-    private val notesViewModel : NotesViewModel by activityViewModels()
-    private val noteIDArgument : EditNoteFragmentArgs by navArgs()
+    private val notesViewModel: NotesViewModel by activityViewModels()
+    private val noteIDArgument: EditNoteFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,8 @@ class NoteFragment : Fragment() {
         toolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.edit_note_icon -> {
-                    val action = NoteFragmentDirections.actionNoteFragmentToEditNoteFragment(noteIDArgument.noteID)
+                    val action =
+                        NoteFragmentDirections.actionNoteFragmentToEditNoteFragment(noteIDArgument.noteID)
                     findNavController().navigate(action)
                     true
                 }
@@ -54,13 +55,16 @@ class NoteFragment : Fragment() {
             }
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_noteFragment_to_notesFragment)
-            }
-        })
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_noteFragment_to_notesFragment)
+                }
+            })
 
-        notesViewModel.getNote(noteIDArgument.noteID).observe(viewLifecycleOwner, Observer { note -> note?.let { setNoteFieldValues(it) } })
+        notesViewModel.getNote(noteIDArgument.noteID)
+            .observe(viewLifecycleOwner, Observer { note -> note?.let { setNoteFieldValues(it) } })
     }
 
     private fun setNoteFieldValues(note: NoteInfo) {

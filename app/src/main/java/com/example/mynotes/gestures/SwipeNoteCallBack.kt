@@ -8,16 +8,20 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotes.R
 
-abstract class SwipeNoteCallBack(private val context: Context, private val recyclerView: RecyclerView) : ItemTouchHelper.Callback() {
+abstract class SwipeNoteCallBack(
+    private val context: Context,
+    private val recyclerView: RecyclerView
+) : ItemTouchHelper.Callback() {
 
-    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_delete_sweep_24)
+    private val deleteIcon =
+        ContextCompat.getDrawable(context, R.drawable.ic_baseline_delete_sweep_24)
     private val editIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_edit_24)
     private val intrinsicWidthDeleteIcon = deleteIcon!!.intrinsicWidth
     private val intrinsicHeightDeleteIcon = deleteIcon!!.intrinsicHeight
     private val intrinsicWidthEditIcon = editIcon!!.intrinsicWidth
     private val intrinsicHeightEditIcon = editIcon!!.intrinsicHeight
     private val background = ColorDrawable()
-    private val backgroundColorDelete =Color.parseColor("#FF2D55")
+    private val backgroundColorDelete = Color.parseColor("#FF2D55")
     private val backgroundColorComplete = Color.parseColor("#34C759")
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
@@ -55,8 +59,22 @@ abstract class SwipeNoteCallBack(private val context: Context, private val recyc
 
         when {
             isCanceled -> {
-                clearCanvas(c, itemView.right + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                clearCanvas(
+                    c,
+                    itemView.right + dX,
+                    itemView.top.toFloat(),
+                    itemView.right.toFloat(),
+                    itemView.bottom.toFloat()
+                )
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
                 return
             }
             dX < 0 -> {
@@ -64,7 +82,12 @@ abstract class SwipeNoteCallBack(private val context: Context, private val recyc
                 //Background color set to red on left swipe
                 background.color = backgroundColorDelete
                 //background image set to delete on swipe
-                background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
+                background.setBounds(
+                    itemView.right + dX.toInt(),
+                    itemView.top,
+                    itemView.right,
+                    itemView.bottom
+                )
                 background.draw(c)
 
                 val deleteIconTop = itemView.top + (itemHeight - intrinsicHeightEditIcon) / 2
@@ -73,14 +96,24 @@ abstract class SwipeNoteCallBack(private val context: Context, private val recyc
                 val deleteIconRight = itemView.right - deleteIconMargin
                 val deleteIconBottom = deleteIconTop + intrinsicHeightEditIcon
 
-                deleteIcon!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+                deleteIcon!!.setBounds(
+                    deleteIconLeft,
+                    deleteIconTop,
+                    deleteIconRight,
+                    deleteIconBottom
+                )
                 deleteIcon.draw(c)
             }
             else -> {
                 //background color is set to green on right swipe
                 background.color = backgroundColorComplete
                 //background image is set to edit on swipe
-                background.setBounds(itemView.left + dX.toInt(), itemView.top, itemView.left, itemView.bottom)
+                background.setBounds(
+                    itemView.left + dX.toInt(),
+                    itemView.top,
+                    itemView.left,
+                    itemView.bottom
+                )
                 background.draw(c)
 
                 val editIconTop = itemView.top + (itemHeight - intrinsicHeightDeleteIcon) / 2
